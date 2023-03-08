@@ -1,38 +1,41 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs", "nipreps-versions"]
 build-backend = "hatchling.build"
 
 [project]
 name = "miniqc"
-description = ''
+description = 'A BIDS app for performing minimal QC beyond validation'
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 license = "MIT"
 keywords = []
 authors = [
-  { name = "Chris Markiewicz", email = "effigies@gmail.com" },
+  { name = "Chris Markiewicz", email = "markiewicz@stanford.edu" },
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = []
 dynamic = ["version"]
 
 [project.urls]
-Documentation = "https://github.com/unknown/miniqc#readme"
-Issues = "https://github.com/unknown/miniqc/issues"
-Source = "https://github.com/unknown/miniqc"
+Documentation = "https://github.com/effigies/miniqc#readme"
+Issues = "https://github.com/effigies/miniqc/issues"
+Source = "https://github.com/effigies/miniqc"
 
 [tool.hatch.version]
-path = "miniqc/__about__.py"
+source = "vcs"
+raw-options = { version_scheme = "nipreps-calver" }
+
+[tool.hatch.build.hooks.vcs]
+version-file = "miniqc/_version.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [".git_archival.txt"]  # No longer needed in sdist
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -44,7 +47,7 @@ cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=miniqc
 no-cov = "cov --no-cov {args}"
 
 [[tool.hatch.envs.test.matrix]]
-python = ["37", "38", "39", "310", "311"]
+python = ["39", "310", "311"]
 
 [tool.coverage.run]
 branch = true
