@@ -19,13 +19,19 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
 ]
-dependencies = []
+dependencies = [
+  "nibabel",
+  "typer",
+]
 dynamic = ["version"]
 
 [project.urls]
 Documentation = "https://github.com/effigies/miniqc#readme"
 Issues = "https://github.com/effigies/miniqc/issues"
 Source = "https://github.com/effigies/miniqc"
+
+[project.scripts]
+miniqc = "miniqc.__main__:app"
 
 [tool.hatch.version]
 source = "vcs"
