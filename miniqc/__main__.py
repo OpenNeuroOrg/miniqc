@@ -16,7 +16,9 @@ class AnalysisLevel(Enum):
     participant = 'participant'
     dataset = 'dataset'
 
+
 app = typer.Typer()
+
 
 @app.command()
 def main(
@@ -37,11 +39,20 @@ def main(
                         hdr: nb.Nifti1Header = img.header  # type: ignore
                     elif isinstance(img, nb.Cifti2Image):
                         hdr: nb.Nifti2Header = img.nifti_header  # type: ignore
-                    expected_size = int(hdr['vox_offset'] + (hdr['bitpix'] // 8) * prod(img.shape))
+                    expected_size = int(
+                        hdr['vox_offset']
+                        + (hdr['bitpix'] // 8) * prod(img.shape)
+                    )
                     with img.dataobj._get_fileobj() as fobj:
                         fobj.seek(expected_size)
                 except Exception as e:
-                    errors.append((str(path.relative_to(bids_dir)), type(e).__name__, str(e)))
+                    errors.append(
+                        (
+                            str(path.relative_to(bids_dir)),
+                            type(e).__name__,
+                            str(e),
+                        )
+                    )
     print(json.dumps(errors, indent=2))
     typer.Exit(len(errors))
 
