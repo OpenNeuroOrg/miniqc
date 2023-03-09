@@ -25,6 +25,12 @@ def main(
     bids_dir: Path,
     output_dir: ty.Optional[Path] = typer.Argument(None),
     analysis_level: ty.Optional[AnalysisLevel] = typer.Argument(None),
+    allow_dangling_links: bool = typer.Option(
+        False,
+        '--allow-dangling-links',
+        '-l',
+        help='Ignore symlinks with missing targets',
+    ),
 ):
     errors = []
     for root, dirs, files in os.walk(bids_dir):
@@ -46,6 +52,10 @@ def main(
                     with img.dataobj._get_fileobj() as fobj:
                         fobj.seek(expected_size)
                 except Exception as e:
+                    if allow_dangling_links and isinstance(
+                        e, FileNotFoundError
+                    ):
+                        continue
                     errors.append(
                         (
                             str(path.relative_to(bids_dir)),
