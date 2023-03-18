@@ -40,17 +40,20 @@ def main(
             if re.search(r'\.nii(.gz)?$', file):
                 path = root_path / file
                 try:
-                    img = nb.load(path)
-                    if isinstance(img, nb.Nifti1Image):
-                        hdr: nb.Nifti1Header = img.header  # type: ignore
-                    elif isinstance(img, nb.Cifti2Image):
-                        hdr: nb.Nifti2Header = img.nifti_header  # type: ignore
+                    try:
+                        img = nb.Nifti1Image.from_filename(path)
+                    except Exception:
+                        img = nb.Nifti2Image.from_filename(path)
                     expected_size = int(
-                        hdr['vox_offset']
-                        + (hdr['bitpix'] // 8) * prod(img.shape)
+                        img.header['vox_offset']
+                        + (img.header['bitpix'] // 8) * prod(img.shape)
                     )
+
+                    # Nudge type checker
+                    assert isinstance(img.dataobj, nb.arrayproxy.ArrayProxy)
                     with img.dataobj._get_fileobj() as fobj:
                         fobj.seek(expected_size)
+
                 except Exception as e:
                     if allow_dangling_links and isinstance(
                         e, FileNotFoundError
