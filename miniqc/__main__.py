@@ -2,56 +2,19 @@ import json
 import os
 import re
 import typing as ty
-from dataclasses import dataclass
 from enum import Enum
-from math import prod
 from pathlib import Path
 
-import nibabel as nb
 import typer
 
-T = ty.TypeVar('T')
-
-
-@dataclass
-class CheckList(ty.Generic[T]):
-    """Object that pairs a file loader with boolean checks on the loaded file"""
-
-    loader: ty.Callable[[os.PathLike], T]
-    checks: list[ty.Callable[[T], bool]]
-
-
-def nifti_load(path: os.PathLike) -> nb.Nifti1Image:
-    """Load NIfTI-1 or NIfTI-2 (including CIFTI-2) images"""
-    try:
-        return nb.Nifti1Image.from_filename(path)
-    except Exception:
-        return nb.Nifti2Image.from_filename(path)
-
-
-def nifti_fullsize(img: nb.Nifti1Image) -> bool:
-    """Verify NIfTI image is seekable to expected length"""
-    expected_size = int(
-        img.header['vox_offset']
-        + (img.header['bitpix'] // 8) * prod(img.shape)
-    )
-
-    # Nudge type checker
-    assert isinstance(img.dataobj, nb.arrayproxy.ArrayProxy)
-    with img.dataobj._get_fileobj() as fobj:
-        fobj.seek(expected_size)
-
-    return True
-
+from . import nifti
+from .types import CheckList, FailedCheck
 
 # Regex patterns paired with checklists to verify on file
 # To avoid multiple reads, only the first matching check is applied to each
 # file
 CHECKS: list[tuple[re.Pattern[str], CheckList]] = [
-    (
-        re.compile(r'\.nii(.gz)?$'),
-        CheckList(loader=nifti_load, checks=[nifti_fullsize]),
-    ),
+    (re.compile(r'\.nii(\.gz)?$'), nifti.CHECKS),
 ]
 
 app = typer.Typer()
@@ -87,8 +50,9 @@ def main(
                     try:
                         fileobj = checklist.loader(path)
                         for check in checklist.checks:
-                            if not check(fileobj):
-                                raise ValueError(check.__doc__)
+                            result, message = check(fileobj)
+                            if not result:
+                                raise FailedCheck(message or check.__doc__)
                     except Exception as e:
                         if not allow_dangling_links or not isinstance(
                             e, FileNotFoundError
@@ -102,7 +66,7 @@ def main(
                             )
                     break
     print(json.dumps(errors, indent=2))
-    typer.Exit(len(errors))
+    typer.Exit(len(errors) > 0)
 
 
 if __name__ == '__main__':
