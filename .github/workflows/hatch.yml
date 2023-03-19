@@ -29,11 +29,14 @@ jobs:
       matrix:
         os: ['ubuntu-latest']
         python-version: ['3.9', '3.10', '3.11']
-        command: ['test:no-cov', 'type:check']
+        command: ['test:no-cov']
         include:
           - os: 'ubuntu-latest'
             python-version: '3'
             command: 'test:cov'
+          - os: 'ubuntu-latest'
+            python-version: '3'
+            command: 'type:check'
 
     steps:
       - uses: actions/checkout@v3
