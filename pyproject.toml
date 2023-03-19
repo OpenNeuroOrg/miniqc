@@ -52,6 +52,18 @@ dependencies = [
 cov = "pytest --cov-report=term-missing --cov-fail-under=100 --cov-config=pyproject.toml --cov=miniqc --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
 
+[tool.hatch.envs.type]
+detached = true
+dependencies = [
+  "mypy",
+  "nibabel",
+  "typer",
+  "pytest",
+]
+
+[tool.hatch.envs.type.scripts]
+check = "mypy . {args}"
+
 [[tool.hatch.envs.test.matrix]]
 python = ["39", "310", "311"]
 
