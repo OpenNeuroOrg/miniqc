@@ -38,7 +38,7 @@ def main(
         '-l',
         help='Ignore symlinks with missing targets',
     ),
-):
+) -> None:
     errors = []
     for root, dirs, files in os.walk(bids_dir):
         dirs[:] = [d for d in dirs if not d[0] == '.']

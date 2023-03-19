@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import pytest
 from typer.testing import CliRunner
@@ -9,7 +10,7 @@ runner = CliRunner()
 
 
 @pytest.mark.parametrize('allow_dangling', (True, False))
-def test_app(example_dataset, allow_dangling):
+def test_app(example_dataset: Path, allow_dangling: bool) -> None:
     args = ['-l', str(example_dataset)]
     if not allow_dangling:
         args = args[1:]
@@ -17,7 +18,7 @@ def test_app(example_dataset, allow_dangling):
     result = runner.invoke(app, args)
 
     assert result.exit_code == 1
-    errors = json.loads(result.stdout)
+    errors: list[list[str]] = json.loads(result.stdout)
     assert len(errors) == 1 if allow_dangling else 2
     assert [
         'sub-01/anat/sub-01_acq-truncated_T2w.nii.gz',

@@ -6,7 +6,7 @@ import nibabel as nb
 from .types import CheckList, CheckResult
 
 
-def load(path: os.PathLike) -> nb.Nifti1Image:
+def load(path: os.PathLike[str]) -> nb.Nifti1Image:
     """Load NIfTI-1 or NIfTI-2 (including CIFTI-2) images"""
     try:
         return nb.Nifti1Image.from_filename(path)
