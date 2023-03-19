@@ -66,7 +66,7 @@ def main(
                             )
                     break
     print(json.dumps(errors, indent=2))
-    typer.Exit(len(errors) > 0)
+    raise typer.Exit(code=len(errors) > 0)
 
 
 if __name__ == '__main__':

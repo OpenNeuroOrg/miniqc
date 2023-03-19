@@ -59,7 +59,7 @@ python = ["39", "310", "311"]
 branch = true
 parallel = true
 omit = [
-  "miniqc/__about__.py",
+  "miniqc/_version.py",
 ]
 
 [tool.coverage.report]

@@ -1,5 +1,4 @@
 import os
-import re
 from math import prod
 
 import nibabel as nb
@@ -17,17 +16,16 @@ def load(path: os.PathLike) -> nb.Nifti1Image:
 
 def fullsize(img: nb.Nifti1Image) -> CheckResult:
     """Verify NIfTI image has expected length from header"""
-    dataobj = img.dataobj
-    # Nudge type checker
-    assert isinstance(dataobj, nb.arrayproxy.ArrayProxy)
+    dataobj: nb.arrayproxy.ArrayProxy = img.dataobj  # type: ignore
 
     expected = dataobj.offset + dataobj.dtype.itemsize * prod(dataobj.shape)
 
     with dataobj._get_fileobj() as fobj:
+        # Seek beyond end returns end position
         actual = fobj.seek(expected + 1)
-        return CheckResult(
-            (actual == expected, f'Expected {expected} bytes; found {actual}')
-        )
+    return CheckResult(
+        (actual == expected, f'Expected {expected} bytes; found {actual}')
+    )
 
 
 CHECKS = CheckList(
