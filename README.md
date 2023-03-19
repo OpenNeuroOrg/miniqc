@@ -62,7 +62,7 @@ exceptions raised while checking the file).
 With the [hatch](https://hatch.pypa.io) project management tool installed:
 
 ```console
-hatch env run cov
+hatch run test:cov
 ```
 
 Alternately, just run `pytest`, although you will need the dependencies installed.

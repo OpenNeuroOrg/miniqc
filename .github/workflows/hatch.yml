@@ -18,6 +18,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: 'bash'
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -25,11 +29,12 @@ jobs:
       matrix:
         os: ['ubuntu-latest']
         python-version: ['3.9', '3.10', '3.11']
-        shell: ['bash']
+        command: ['test:no-cov']
+        include:
+          - os: 'ubuntu-latest'
+            python-version: '3'
+            command: 'test:cov'
 
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -43,13 +48,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install hatch
       - name: Test
-        run: hatch run test:cov
+        run: hatch run ${{ matrix.command }}
 
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: 'bash'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -88,7 +90,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install hatch
       - name: Test
-        run: cd miniqc-* && hatch run test:cov
+        run: cd miniqc-* && hatch run test:nocov
 
   publish:
     runs-on: ubuntu-latest
