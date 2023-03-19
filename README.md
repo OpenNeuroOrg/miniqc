@@ -1,9 +1,13 @@
-# miniqc
+# miniQC
 
 [![PyPI - Version](https://img.shields.io/pypi/v/miniqc.svg)](https://pypi.org/project/miniqc)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/miniqc.svg)](https://pypi.org/project/miniqc)
 
 -----
+
+miniQC is a BIDS App for performing minimal quality control beyond validation.
+Its goal is to rapidly detect data corruption, as opposed to dataset coherence
+or image quality.
 
 **Table of Contents**
 
