@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest']
-        python-version: ['3.9', '3.10', '3.11', 'pypy3.9']
+        python-version: ['3.9', '3.10', '3.11']
         shell: ['bash']
 
     defaults:
@@ -34,7 +34,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-      - name: Install Tox
+      - name: Install Hatch
         run: |
           python -m pip install --upgrade pip
           pip install hatch
@@ -79,10 +79,10 @@ jobs:
           python-version: 3
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-      - name: Install Tox
+      - name: Install Hatch
         run: |
           python -m pip install --upgrade pip
-          pip install tox tox-gh-actions
+          pip install hatch
       - name: Test
         run: cd miniqc-* && hatch run test:cov
 
