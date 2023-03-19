@@ -90,7 +90,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install hatch
       - name: Test
-        run: cd miniqc-* && hatch run test:nocov
+        run: cd miniqc-* && hatch run test:no-cov
 
   publish:
     runs-on: ubuntu-latest
