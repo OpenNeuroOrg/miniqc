@@ -57,9 +57,8 @@ $ miniqc tests/data/bids_dataset
 ### Outputs
 
 The output of this tool is a JSON array of arrays, each of length 3.
-The each sub-array contains the failed file (relative to dataset root),
-the type of error (`"FailedCheck"` for miniqc-defined failures, or any Python
-exceptions raised while checking the file).
+Each sub-array contains the failed file (relative to dataset root),
+the type of error, and a message with more detail.
 
 ## Testing
 
