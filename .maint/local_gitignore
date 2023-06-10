@@ -1,0 +1,5 @@
+# setuptools_scm
+_version.py
+
+# mypy --html-report mypy_coverage
+mypy_coverage
