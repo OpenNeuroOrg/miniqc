@@ -1,3 +1,18 @@
+.. _changelog-23.0.1:
+
+23.0.1 — 2023-06-10
+===================
+
+Added
+-----
+
+- Build Docker image and push to GHCR
+
+Changed
+-------
+
+- Small updates to type annotations.
+- Reduced Docker image size.
 
 .. _changelog-23.0.0:
 
