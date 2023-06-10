@@ -11,7 +11,7 @@ CheckResult = ty.NewType('CheckResult', tuple[bool, str])
 class CheckList(ty.Generic[T]):
     """Pair a file loader with boolean checks on the loaded file"""
 
-    loader: ty.Callable[[os.PathLike], T]
+    loader: ty.Callable[[os.PathLike[str]], T]
     checks: list[ty.Callable[[T], CheckResult]]
 
 

@@ -5,15 +5,19 @@ import typing as ty
 from enum import Enum
 from pathlib import Path
 
+import nibabel as nb
 import typer
 
 from . import nifti
 from .types import CheckList, FailedCheck
 
+# Add to this list as file types are added
+SupportedType: ty.TypeAlias = ty.Union[nb.Nifti1Image,]
+
 # Regex patterns paired with checklists to verify on file
 # To avoid multiple reads, only the first matching check is applied to each
 # file
-CHECKS: list[tuple[re.Pattern[str], CheckList]] = [
+CHECKS: list[tuple[re.Pattern[str], CheckList[SupportedType]]] = [
     (re.compile(r'\.nii(\.gz)?$'), nifti.CHECKS),
 ]
 

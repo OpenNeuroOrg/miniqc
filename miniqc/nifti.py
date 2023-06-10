@@ -18,11 +18,11 @@ def fullsize(img: nb.Nifti1Image) -> CheckResult:
     """Verify NIfTI image has expected length from header"""
     dataobj: nb.arrayproxy.ArrayProxy = img.dataobj  # type: ignore
 
-    expected = dataobj.offset + dataobj.dtype.itemsize * prod(dataobj.shape)
+    expected: int = dataobj.offset + dataobj.dtype.itemsize * prod(dataobj.shape)
 
     with dataobj._get_fileobj() as fobj:
         # Seek beyond end returns end position
-        actual = fobj.seek(expected + 1)
+        actual: int = fobj.seek(expected + 1)
     return CheckResult(
         (actual == expected, f'Expected {expected} bytes; found {actual}')
     )
