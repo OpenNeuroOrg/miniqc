@@ -7,12 +7,13 @@ from pathlib import Path
 
 import nibabel as nb
 import typer
+from typing_extensions import TypeAlias
 
 from . import nifti
 from .types import CheckList, FailedCheck
 
 # Add to this list as file types are added
-SupportedType: ty.TypeAlias = ty.Union[nb.Nifti1Image,]
+SupportedType: TypeAlias = ty.Union[nb.Nifti1Image,]
 
 # Regex patterns paired with checklists to verify on file
 # To avoid multiple reads, only the first matching check is applied to each
