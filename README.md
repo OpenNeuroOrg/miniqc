@@ -2,6 +2,7 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/miniqc.svg)](https://pypi.org/project/miniqc)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/miniqc.svg)](https://pypi.org/project/miniqc)
+[![GHCR - Available Tags](https://ghcr-badge.egpl.dev/OpenNeuroOrg/miniqc/tags?trim=major&label=ghcr.io&ignore=unstable,latest)](https://github.com/OpenNeuroOrg/miniqc/pkgs/container/miniqc)
 
 -----
 
