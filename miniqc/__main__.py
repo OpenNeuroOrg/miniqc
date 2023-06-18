@@ -71,7 +71,7 @@ def check_file(
     bids_dir: ty.Optional[Path] = None,
 ) -> list[tuple[str, str, str]]:
     for pattern, checklist in CHECKS:
-        if re.search(pattern, path.name):
+        if pattern.search(path.name):
             try:
                 fileobj = checklist.loader(path)
                 for check in checklist.checks:
