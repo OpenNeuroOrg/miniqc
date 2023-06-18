@@ -28,3 +28,29 @@ def test_app(example_dataset: Path, allow_dangling: bool) -> None:
 
     if not allow_dangling:
         assert any([err[1] == 'FileNotFoundError' for err in errors])
+
+
+@pytest.mark.parametrize(
+    'file, allow_dangling, exit_code',
+    (
+        ('sub-01_acq-good_T1w.nii.gz', False, 0),
+        ('sub-01_acq-truncated_T2w.nii.gz', False, 1),
+        ('sub-01_acq-dangling_T2w.nii.gz', False, 1),
+        ('sub-01_acq-dangling_T2w.nii.gz', True, 0),
+    ),
+)
+def test_single_file(
+    example_dataset: Path,
+    file: str,
+    allow_dangling: bool,
+    exit_code: bool,
+) -> None:
+    args = ['-l', str(example_dataset / 'sub-01' / 'anat' / file)]
+    if not allow_dangling:
+        args = args[1:]
+
+    result = runner.invoke(app, args)
+
+    assert result.exit_code == exit_code
+    errors: list[list[str]] = json.loads(result.stdout)
+    assert len(errors) == exit_code
