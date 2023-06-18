@@ -37,11 +37,15 @@ jobs:
           path: dist/
 
   test:
-    runs-on: 'ubuntu-latest'
+    runs-on: ${{ matrix.os }}
     needs: [build]
     strategy:
       matrix:
-        source: ['repo', 'sdist']
+        os: ['ubuntu-latest', 'windows-latest']
+        source: ['repo']
+        include:
+          - os: ubuntu-latest
+            source: sdist
     steps:
       - uses: actions/checkout@v3
         if: matrix.source == 'repo'
