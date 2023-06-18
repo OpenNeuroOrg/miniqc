@@ -23,9 +23,7 @@ def fullsize(img: nb.Nifti1Image) -> CheckResult:
     with dataobj._get_fileobj() as fobj:
         # Seek beyond end returns end position
         actual: int = fobj.seek(expected + 1)
-    return CheckResult(
-        (actual == expected, f'Expected {expected} bytes; found {actual}')
-    )
+    return CheckResult((actual == expected, f'Expected {expected} bytes; found {actual}'))
 
 
 CHECKS = CheckList(

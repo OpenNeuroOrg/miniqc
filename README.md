@@ -55,6 +55,19 @@ $ miniqc tests/data/bids_dataset
 ]
 ```
 
+Single file usage is also permitted:
+
+```console
+$ miniqc tests/data/bids_dataset/sub-01/anat/sub-01_acq-truncated_T2w.nii.gz
+[
+  [
+    "/git/miniqc/tests/data/bids_dataset/sub-01/anat/sub-01_acq-truncated_T2w.nii.gz",
+    "FailedCheck",
+    "Expected 477 bytes; found 352"
+  ]
+]
+```
+
 ### Outputs
 
 The output of this tool is a JSON array of arrays, each of length 3.
