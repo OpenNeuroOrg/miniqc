@@ -25,9 +25,7 @@ def test_load_fail(example_dataset: Path) -> None:
         load(example_dataset / 'dataset_description.json')
 
 
-def test_fullsize(
-    good_nifti: Path, truncated_nifti: Path, good_nifti2: Path
-) -> None:
+def test_fullsize(good_nifti: Path, truncated_nifti: Path, good_nifti2: Path) -> None:
     # fullsize returns results if load succeeds
     good, message = fullsize(load(good_nifti))
     assert good

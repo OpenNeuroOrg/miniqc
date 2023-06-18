@@ -15,9 +15,7 @@ def good_nifti(example_dataset: Path) -> Path:
 
 @pytest.fixture(scope='session')
 def truncated_nifti(example_dataset: Path) -> Path:
-    return (
-        example_dataset / 'sub-01' / 'anat' / 'sub-01_acq-truncated_T2w.nii.gz'
-    )
+    return example_dataset / 'sub-01' / 'anat' / 'sub-01_acq-truncated_T2w.nii.gz'
 
 
 @pytest.fixture(scope='session')
