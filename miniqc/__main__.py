@@ -67,7 +67,7 @@ def main(
     raise typer.Exit(code=len(errors) > 0)
 
 
-def unix_format(pathlike: os.PathLike) -> str:
+def unix_format(pathlike: os.PathLike[str]) -> str:
     """Format any pathlike in POSIX style (forward-slashes)."""
     return posixpath.join(*Path(pathlike).parts)
 
