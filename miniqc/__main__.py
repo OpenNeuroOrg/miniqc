@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import posixpath
 import typing as ty
 from enum import Enum
 from itertools import chain
@@ -66,6 +67,11 @@ def main(
     raise typer.Exit(code=len(errors) > 0)
 
 
+def unix_format(pathlike: os.PathLike) -> str:
+    """Format any pathlike in POSIX style (forward-slashes)."""
+    return posixpath.join(*Path(pathlike).parts)
+
+
 def check_file(
     path: Path,
     bids_dir: ty.Optional[Path] = None,
@@ -81,7 +87,7 @@ def check_file(
             except Exception as e:
                 if bids_dir is not None:
                     path = path.relative_to(bids_dir)
-                return [(str(path), type(e).__name__, str(e))]
+                return [(unix_format(path), type(e).__name__, str(e))]
     return []
 
 
