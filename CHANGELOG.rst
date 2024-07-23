@@ -1,4 +1,15 @@
 
+.. _changelog-23.1.1:
+
+23.1.1 — 2024-07-23
+===================
+
+Changed
+-------
+
+- Updated package metadata and test configuration.
+- Minor updates to CI.
+
 .. _changelog-23.1.0:
 
 23.1.0 — 2023-06-18
