@@ -8,3 +8,7 @@ updates:
       actions-infrastructure:
         patterns:
           - 'actions/*'
+    groups:
+      docker:
+        patterns:
+          - 'docker/*'
