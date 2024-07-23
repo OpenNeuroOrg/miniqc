@@ -16,9 +16,7 @@ classifiers = [
   "Development Status :: 4 - Beta",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3",
 ]
 dependencies = [
   "nibabel",
@@ -28,9 +26,9 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Documentation = "https://github.com/effigies/miniqc#readme"
-Issues = "https://github.com/effigies/miniqc/issues"
-Source = "https://github.com/effigies/miniqc"
+Documentation = "https://github.com/OpenNeuroOrg/miniqc#readme"
+Issues = "https://github.com/OpenNeuroOrg/miniqc/issues"
+Source = "https://github.com/OpenNeuroOrg/miniqc"
 
 [project.scripts]
 miniqc = "miniqc.__main__:app"
@@ -67,7 +65,7 @@ dependencies = [
 check = "mypy . {args}"
 
 [[tool.hatch.envs.test.matrix]]
-python = ["39", "310", "311"]
+python = ["39", "310", "311", "312", "313"]
 
 [tool.coverage.run]
 branch = true
