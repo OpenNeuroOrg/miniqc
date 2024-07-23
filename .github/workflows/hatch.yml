@@ -33,12 +33,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - run: pipx run build
       - run: pipx run twine check dist/*
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
@@ -54,9 +54,9 @@ jobs:
           - os: ubuntu-latest
             source: sdist
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: matrix.source == 'repo'
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
@@ -64,7 +64,7 @@ jobs:
       - name: Unpack sdist
         run: tar --strip-components=1 -xvzf dist/*.tar.gz
         if: matrix.source == 'sdist'
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: |
             3.9
@@ -83,7 +83,7 @@ jobs:
       id-token: write
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
