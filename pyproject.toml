@@ -28,9 +28,9 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Documentation = "https://github.com/effigies/miniqc#readme"
-Issues = "https://github.com/effigies/miniqc/issues"
-Source = "https://github.com/effigies/miniqc"
+Documentation = "https://github.com/OpenNeuroOrg/miniqc#readme"
+Issues = "https://github.com/OpenNeuroOrg/miniqc/issues"
+Source = "https://github.com/OpenNeuroOrg/miniqc"
 
 [project.scripts]
 miniqc = "miniqc.__main__:app"
